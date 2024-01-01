@@ -83,9 +83,16 @@ public class BarrelCtrl : MonoBehaviour
 
         // 메모리 Garbage가 일어나지 않고 사용하기 위한 방법
         Physics.OverlapSphereNonAlloc(pos, radius, colls, 1 << 3);
-
+        
         foreach (var coll in colls)
         {
+            // 10개가 감지 되지 않았을 경우, 배열안에 null이 있음
+            // 이로 인해 드럼통이 삭제되지 않는 버그 있음.
+            if (coll == null)
+            {
+                break;
+            }
+            
             // 드럼통 Rigidbody 추출
             rb = coll.GetComponent<Rigidbody>();
             
