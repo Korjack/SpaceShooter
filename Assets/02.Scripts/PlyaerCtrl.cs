@@ -13,12 +13,17 @@ public class PlyaerCtrl : MonoBehaviour
     public float turnSpeed = 80.0f; // 회전속도 정의
     
     // Start is called before the first frame update
-    void Start()
+    IEnumerator Start()
     {
         tr = GetComponent<Transform>();
         anim = GetComponent<Animation>();
 
         anim.Play("Idle");
+
+        // 게임 시작시, 마우스 위치로 인하여 플레이어가 보는 방향이 확 이동될 때.
+        turnSpeed = 0.0f;
+        yield return new WaitForSeconds(0.3f);
+        turnSpeed = 80.0f;
     }
 
     // Update is called once per frame
