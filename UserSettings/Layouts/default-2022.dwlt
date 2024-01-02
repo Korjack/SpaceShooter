@@ -707,9 +707,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.31793332, y: 1.2631564, z: 0.4093327}
+    m_Target: {x: 0.00815266, y: 1.4299712, z: 0.49363354}
     speed: 2
-    m_Value: {x: 0.31793332, y: 1.2631564, z: 0.4093327}
+    m_Value: {x: 0.00815266, y: 1.4299712, z: 0.49363354}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -755,9 +755,9 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.35201472, y: 0.43950167, z: -0.1924692, w: -0.8036959}
+    m_Target: {x: 0.0010688377, y: 0.98453623, z: -0.0062211524, w: 0.17520675}
     speed: 2
-    m_Value: {x: -0.35201472, y: 0.4395017, z: -0.1924692, w: -0.803696}
+    m_Value: {x: 0.0010688376, y: 0.98453623, z: -0.0062211524, w: 0.17520675}
   m_Size:
     m_Target: 1.2295336
     speed: 2
@@ -1266,7 +1266,7 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: 2c5b0000
       m_LastClickedID: 0
       m_ExpandedIDs: 00fbffff
       m_RenameOverlay:
@@ -1337,7 +1337,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/04.Images/Materials
+    - Assets/02.Scripts
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1354,7 +1354,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: c4590000
     m_LastClickedID: 22980
-    m_ExpandedIDs: 00000000105c00005c5d00005e5d0000605d0000625d0000645d0000665d0000685d00006a5d00006c5d00006e5d0000705d0000725d0000
+    m_ExpandedIDs: 000000000c5c0000585d00005a5d00005c5d00005e5d0000605d0000625d0000645d0000665d0000685d00006a5d00006c5d00006e5d0000705d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1382,7 +1382,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000105c00005c5d00005e5d0000605d0000625d0000645d0000665d0000685d00006a5d00006c5d00006e5d0000705d0000725d0000
+    m_ExpandedIDs: ffffffff000000000c5c0000585d00005a5d00005c5d00005e5d0000605d0000625d0000645d0000665d0000685d00006a5d00006c5d00006e5d0000705d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
