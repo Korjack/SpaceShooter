@@ -33,6 +33,7 @@ public class MonsterCtrl : MonoBehaviour
     private Animator anim;
     private static readonly int IsTrace = Animator.StringToHash("IsTrace");
     private static readonly int IsAttack = Animator.StringToHash("IsAttack");
+    private static readonly int Hit = Animator.StringToHash("Hit");
 
     // Start is called before the first frame update
     void Start()
@@ -116,6 +117,18 @@ public class MonsterCtrl : MonoBehaviour
             }
 
             yield return new WaitForSeconds(0.3f);
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        // 부딫힌게 총알이면
+        if (other.collider.CompareTag("BULLET"))
+        {
+            // 총알 삭제
+            Destroy(other.gameObject);
+            // 피격 리액션 에니메이션 실행
+            anim.SetTrigger(Hit);
         }
     }
 
