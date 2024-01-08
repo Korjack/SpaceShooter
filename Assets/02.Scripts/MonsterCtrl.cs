@@ -29,6 +29,9 @@ public class MonsterCtrl : MonoBehaviour
     // 몬스터 사망 여부
     public bool isDie = false;
     
+    // 혈흔 효과 프리팹
+    private GameObject bloodEffect;
+    
     //애니메이터
     private Animator anim;
     private static readonly int IsTrace = Animator.StringToHash("IsTrace");
@@ -43,6 +46,8 @@ public class MonsterCtrl : MonoBehaviour
         playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
         _agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+
+        bloodEffect = Resources.Load<GameObject>("BloodSprayEffect");
 
         // 몬스터 추적 바로 시작
         // _agent.destination = playerTr.position;
@@ -129,7 +134,21 @@ public class MonsterCtrl : MonoBehaviour
             Destroy(other.gameObject);
             // 피격 리액션 에니메이션 실행
             anim.SetTrigger(Hit);
+            
+            // 총알 충돌 지점
+            Vector3 pos = other.GetContact(0).point;
+            // 총알의 충돌 지점의 법선 벡터
+            Quaternion rot = Quaternion.LookRotation(-other.GetContact(0).normal);
+            // 혈흔 효과를 생성하는 함수
+            ShowBloodEffect(pos, rot);
         }
+    }
+
+    void ShowBloodEffect(Vector3 pos, Quaternion rot)
+    {
+        // 혈흔 효과 생성
+        GameObject blood = Instantiate<GameObject>(bloodEffect, pos, rot, monsterTr);
+        Destroy(blood, 1.0f);
     }
 
     private void OnDrawGizmos()
