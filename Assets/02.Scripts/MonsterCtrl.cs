@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class MonsterCtrl : MonoBehaviour
 {
@@ -37,6 +38,8 @@ public class MonsterCtrl : MonoBehaviour
     private static readonly int IsTrace = Animator.StringToHash("IsTrace");
     private static readonly int IsAttack = Animator.StringToHash("IsAttack");
     private static readonly int Hit = Animator.StringToHash("Hit");
+    private static readonly int PlayerDie = Animator.StringToHash("PlayerDie");
+    private static readonly int Speed = Animator.StringToHash("Speed");
 
     // Start is called before the first frame update
     void Start()
@@ -168,4 +171,22 @@ public class MonsterCtrl : MonoBehaviour
             
         }
     }
+
+    private void OnPlayerDie()
+    {
+        // 몬스터 상태를 체크하는 코루틴 모두 정지
+        StopAllCoroutines();
+        
+        // 추적을 정지하고 애니메이션 수행
+        _agent.isStopped = true;
+        anim.SetFloat(Speed, Random.Range(0.8f, 1.2f));
+        anim.SetTrigger(PlayerDie);
+    }
+
+    // 몬스터의 몸과 양쪽 팔의 물리적 충돌 감지를 위해 추가한 트리거
+    // 현재 레이어 기준으로 나눠놔서, 감지되지 않음.
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     Debug.Log(other.gameObject.name);
+    // }
 }

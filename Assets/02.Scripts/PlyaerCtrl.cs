@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,10 +12,18 @@ public class PlyaerCtrl : MonoBehaviour
     
     public float moveSpeed = 10.0f; // 움직이는 속도 정의
     public float turnSpeed = 80.0f; // 회전속도 정의
+
+    // 초기 체력 값
+    private readonly float initHP = 100.0f;
+    // 현재 체력 값
+    public float currHP;
     
     // Start is called before the first frame update
     IEnumerator Start()
     {
+        // 초기 체력값 설정
+        currHP = initHP;
+        
         tr = GetComponent<Transform>();
         anim = GetComponent<Animation>();
 
@@ -76,6 +85,32 @@ public class PlyaerCtrl : MonoBehaviour
         else
         {
             anim.CrossFade("Idle", 0.25f); // 아무것도 하지 않았다면 대기
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (currHP >= 0.0f && other.CompareTag("PUNCH"))
+        {
+            currHP -= 10.0f;
+            Debug.Log($"Player HP = {currHP/initHP}");
+
+            if (currHP <= 0.0f)
+            {
+                PlayerDie();
+            }
+        }
+    }
+
+    private void PlayerDie()
+    {
+        Debug.Log("Player Dead!");
+
+        GameObject[] monsters = GameObject.FindGameObjectsWithTag("MONSTER");
+
+        foreach (GameObject monster in monsters)
+        {
+            monster.SendMessage("OnPlayerDie", SendMessageOptions.DontRequireReceiver);
         }
     }
 }
