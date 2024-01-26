@@ -18,6 +18,11 @@ public class PlyaerCtrl : MonoBehaviour
     // 현재 체력 값
     public float currHP;
     
+    // 델리게이트 선언
+    public delegate void PlayerDieHander();
+    // 이벤트 선언
+    public static event PlayerDieHander OnPlayerDie;
+    
     // Start is called before the first frame update
     IEnumerator Start()
     {
@@ -106,11 +111,13 @@ public class PlyaerCtrl : MonoBehaviour
     {
         Debug.Log("Player Dead!");
 
-        GameObject[] monsters = GameObject.FindGameObjectsWithTag("MONSTER");
+        // GameObject[] monsters = GameObject.FindGameObjectsWithTag("MONSTER");
+        //
+        // foreach (GameObject monster in monsters)
+        // {
+        //     monster.SendMessage("OnPlayerDie", SendMessageOptions.DontRequireReceiver);
+        // }
 
-        foreach (GameObject monster in monsters)
-        {
-            monster.SendMessage("OnPlayerDie", SendMessageOptions.DontRequireReceiver);
-        }
+        OnPlayerDie();
     }
 }

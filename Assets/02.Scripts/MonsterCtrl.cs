@@ -183,6 +183,20 @@ public class MonsterCtrl : MonoBehaviour
         anim.SetTrigger(PlayerDie);
     }
 
+    // 스크립트가 활성화될 때마다 호출되는 함수
+    private void OnEnable()
+    {
+        //이벤트 발생시 수행할 함수 연결
+        PlyaerCtrl.OnPlayerDie += OnPlayerDie;
+    }
+
+    // 스크립트가 비활성화될 떄마다 호출되는 함수
+    private void OnDisable()
+    {
+        // 기존에 연결된 함수 해제
+        PlyaerCtrl.OnPlayerDie -= OnPlayerDie;
+    }
+
     // 몬스터의 몸과 양쪽 팔의 물리적 충돌 감지를 위해 추가한 트리거
     // 현재 레이어 기준으로 나눠놔서, 감지되지 않음.
     // private void OnTriggerEnter(Collider other)
