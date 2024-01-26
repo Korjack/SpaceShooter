@@ -40,6 +40,9 @@ public class MonsterCtrl : MonoBehaviour
     private static readonly int Hit = Animator.StringToHash("Hit");
     private static readonly int PlayerDie = Animator.StringToHash("PlayerDie");
     private static readonly int Speed = Animator.StringToHash("Speed");
+    private static readonly int Die = Animator.StringToHash("Die");
+
+    private int hp = 100;
 
     // Start is called before the first frame update
     void Start()
@@ -68,6 +71,9 @@ public class MonsterCtrl : MonoBehaviour
         {
             // 0.3초 대기
             yield return new WaitForSeconds(0.3f);
+            
+            // 몬스터가 죽었다면 코루틴 종료
+            if(state == State.DIE) yield break;
             
             // 몬스터와 주인공 사이의 거리 측정
             float distance = Vector3.Distance(playerTr.position, monsterTr.position);
@@ -121,6 +127,14 @@ public class MonsterCtrl : MonoBehaviour
                     break;
                 // 사망
                 case State.DIE:
+                    isDie = true;
+
+                    // 추적 정지
+                    _agent.isStopped = true;
+                    // 사망 애니메이션 수행
+                    anim.SetTrigger(Die);
+                    // 몬스터의 Collider 컴포넌트 비활성화
+                    GetComponent<CapsuleCollider>().enabled = false;
                     break;
             }
 
@@ -144,6 +158,12 @@ public class MonsterCtrl : MonoBehaviour
             Quaternion rot = Quaternion.LookRotation(-other.GetContact(0).normal);
             // 혈흔 효과를 생성하는 함수
             ShowBloodEffect(pos, rot);
+
+            hp -= 10;
+            if (hp < 0)
+            {
+                state = State.DIE;
+            }
         }
     }
 
