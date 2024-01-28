@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlyaerCtrl : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class PlyaerCtrl : MonoBehaviour
     private readonly float initHP = 100.0f;
     // 현재 체력 값
     public float currHP;
+    // HP Bar에 연결할 변수
+    private Image hpBar;
     
     // 델리게이트 선언
     public delegate void PlayerDieHander();
@@ -26,6 +29,9 @@ public class PlyaerCtrl : MonoBehaviour
     // Start is called before the first frame update
     IEnumerator Start()
     {
+        // HP Bar 로드
+        hpBar = GameObject.FindGameObjectWithTag("HP_BAR")?.GetComponent<Image>();
+        
         // 초기 체력값 설정
         currHP = initHP;
         
@@ -98,6 +104,9 @@ public class PlyaerCtrl : MonoBehaviour
         if (currHP >= 0.0f && other.CompareTag("PUNCH"))
         {
             currHP -= 10.0f;
+            // 체력 보여주기
+            DisplayHealth();
+            
             Debug.Log($"Player HP = {currHP/initHP}");
 
             if (currHP <= 0.0f)
@@ -119,5 +128,10 @@ public class PlyaerCtrl : MonoBehaviour
         // }
 
         OnPlayerDie();
+    }
+
+    private void DisplayHealth()
+    {
+        hpBar.fillAmount = currHP / initHP;
     }
 }
