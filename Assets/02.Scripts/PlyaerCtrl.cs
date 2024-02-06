@@ -120,14 +120,11 @@ public class PlyaerCtrl : MonoBehaviour
     {
         Debug.Log("Player Dead!");
 
-        // GameObject[] monsters = GameObject.FindGameObjectsWithTag("MONSTER");
-        //
-        // foreach (GameObject monster in monsters)
-        // {
-        //     monster.SendMessage("OnPlayerDie", SendMessageOptions.DontRequireReceiver);
-        // }
-
+        // 주인공 사망 이벤트 호출
         OnPlayerDie();
+        
+        // GameManager의 IsGameOver 속성값 변경
+        GameObject.Find("GameMgr").GetComponent<GameManager>().IsGameOver = true;
     }
 
     private void DisplayHealth()
