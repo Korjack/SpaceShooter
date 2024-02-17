@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -37,6 +38,11 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    // 스코어 텍스트
+    public TMP_Text scoreText;
+    // 누적 점수를 기록하기 위한 변수
+    private int totScore = 0;
     
     // 싱글턴을 위한 인스턴스 생성
     public static GameManager instance = null;
@@ -74,6 +80,10 @@ public class GameManager : MonoBehaviour
         
         // 일정한 간격으로 함수를 호출
         InvokeRepeating("CreateMonster", 2.0f, createTime);
+        
+        // 스코어 점수 출력
+        totScore = PlayerPrefs.GetInt("TOT_SCORE", 0);
+        DisplayScore(totScore);
     }
 
     void CreateMonster()
@@ -124,5 +134,14 @@ public class GameManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void DisplayScore(int score)
+    {
+        totScore += score;
+        scoreText.text = $"<color=#00ff00>SCORE :</color> <color=#ff0000>{totScore:#,##0}</color>";
+        
+        // 스코어 저장
+        PlayerPrefs.SetInt("TOT_SCORE", totScore);
     }
 }
