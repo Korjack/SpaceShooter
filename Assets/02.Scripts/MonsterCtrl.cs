@@ -146,12 +146,16 @@ public class MonsterCtrl : MonoBehaviour
                     anim.SetTrigger(Die);
                     // 몬스터의 Collider 컴포넌트 비활성화
                     GetComponent<CapsuleCollider>().enabled = false;
+                    
+                    // 몬스터가 사망시 50점 추가
+                    GameManager.instance.DisplayScore(50);
 
                     yield return new WaitForSeconds(3.0f);
                     
                     // 사망 후 초기화
                     hp = 100;
                     isDie = false;
+                    state = State.IDLE;
                     
                     // 몬스터 Collider 컴포넌트 활성화
                     GetComponent<CapsuleCollider>().enabled = true;
@@ -186,9 +190,6 @@ public class MonsterCtrl : MonoBehaviour
             if (hp < 0)
             {
                 state = State.DIE;
-                
-                // 몬스터가 사망시 50점 추가
-                GameManager.instance.DisplayScore(50);
             }
         }
     }

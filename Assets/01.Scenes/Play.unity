@@ -1391,7 +1391,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   points: []
   monsterPool: []
-  maxMonsters: 10
+  maxMonsters: 1
   monster: {fileID: 5817677474871013047, guid: 0d6689c8d9227a04db01c9b66ae11ea5, type: 3}
   createTime: 3
   scoreText: {fileID: 315859845}
