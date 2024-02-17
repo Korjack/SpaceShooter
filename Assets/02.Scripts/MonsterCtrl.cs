@@ -44,25 +44,36 @@ public class MonsterCtrl : MonoBehaviour
 
     private int hp = 100;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        // 각 컴포넌트 로드
         monsterTr = GetComponent<Transform>();
         playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
         _agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
 
         bloodEffect = Resources.Load<GameObject>("BloodSprayEffect");
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        // 각 컴포넌트 로드
+        // Awake에서 이미 로드했기 때문에 주석 처리
+        // monsterTr = GetComponent<Transform>();
+        // playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        // _agent = GetComponent<NavMeshAgent>();
+        // anim = GetComponent<Animator>();
+        //
+        // bloodEffect = Resources.Load<GameObject>("BloodSprayEffect");
 
         // 몬스터 추적 바로 시작
         // _agent.destination = playerTr.position;
-        
+
         // 몬스터 상태 업로드 코루틴 호출
-        StartCoroutine(CheckMonsterState());
-        
-        // 몬스터 상태에 따른 행동
-        StartCoroutine(MonsterAction());
+        // StartCoroutine(CheckMonsterState());
+        //
+        // // 몬스터 상태에 따른 행동
+        // StartCoroutine(MonsterAction());
     }
 
     IEnumerator CheckMonsterState()
@@ -135,6 +146,18 @@ public class MonsterCtrl : MonoBehaviour
                     anim.SetTrigger(Die);
                     // 몬스터의 Collider 컴포넌트 비활성화
                     GetComponent<CapsuleCollider>().enabled = false;
+
+                    yield return new WaitForSeconds(3.0f);
+                    
+                    // 사망 후 초기화
+                    hp = 100;
+                    isDie = false;
+                    
+                    // 몬스터 Collider 컴포넌트 활성화
+                    GetComponent<CapsuleCollider>().enabled = true;
+                    // 몬스터 비활성화
+                    this.gameObject.SetActive(false);
+                    
                     break;
             }
 
@@ -208,6 +231,12 @@ public class MonsterCtrl : MonoBehaviour
     {
         //이벤트 발생시 수행할 함수 연결
         PlyaerCtrl.OnPlayerDie += OnPlayerDie;
+        
+        // 몬스터 상태 업로드 코루틴 호출
+        StartCoroutine(CheckMonsterState());
+
+        // 몬스터 상태에 따른 행동
+        StartCoroutine(MonsterAction());
     }
 
     // 스크립트가 비활성화될 떄마다 호출되는 함수

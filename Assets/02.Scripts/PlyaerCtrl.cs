@@ -124,7 +124,8 @@ public class PlyaerCtrl : MonoBehaviour
         OnPlayerDie();
         
         // GameManager의 IsGameOver 속성값 변경
-        GameObject.Find("GameMgr").GetComponent<GameManager>().IsGameOver = true;
+        // GameObject.Find("GameMgr").GetComponent<GameManager>().IsGameOver = true;
+        GameManager.instance.IsGameOver = true;
     }
 
     private void DisplayHealth()
