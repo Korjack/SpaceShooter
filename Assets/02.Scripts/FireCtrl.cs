@@ -22,6 +22,9 @@ public class FireCtrl : MonoBehaviour
     
     // Muzzle Flash의 MeshRenderer 컴포넌트
     private MeshRenderer muzzleFlash;
+    
+    // Raycast 결과 값 저장 변수
+    private RaycastHit hit;
 
     private void Start()
     {
@@ -36,9 +39,19 @@ public class FireCtrl : MonoBehaviour
 
     private void Update()
     {
+        // Ray를 시각적으로 표기하기 위해 사용
+        Debug.DrawRay(firePos.position, firePos.forward * 10.0f, Color.green);
+        
         if (Input.GetMouseButtonDown(0))
         {
             Fire();
+            
+            // Ray 발사
+            if(Physics.Raycast(firePos.position, firePos.forward, out hit, 10.0f, 1 << 6))
+            {
+                Debug.Log($"Hit={hit.transform.name}");
+                hit.transform.GetComponent<MonsterCtrl>()?.OnDamge(hit.point, hit.normal);
+            }
         }
     }
 
