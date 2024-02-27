@@ -48,10 +48,31 @@ public class MonsterCtrl : MonoBehaviour
     {
         monsterTr = GetComponent<Transform>();
         playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        
+        // NavMeshAgent 컴포넌트
         _agent = GetComponent<NavMeshAgent>();
+        
+        //NavMeshAgent의 자동 회전 기능 비활성화
+        _agent.updateRotation = false;
+        
+        // 몬스터 애니매이터 컴포넌트
         anim = GetComponent<Animator>();
 
         bloodEffect = Resources.Load<GameObject>("BloodSprayEffect");
+    }
+
+    private void Update()
+    {
+        // 목적지까지 남은 거리로 회전 여부 판단
+        if (_agent.remainingDistance >= 2.0f)
+        {
+            // 에이전트 이동 방향
+            Vector3 direction = _agent.desiredVelocity;
+            // 회전각도(쿼터니언) 산출
+            Quaternion rot = Quaternion.LookRotation(direction);
+            // 구면 선형보간 함수로 부드러운 회전 처리
+            monsterTr.rotation = Quaternion.Slerp(monsterTr.rotation, rot, Time.deltaTime * 10.0f);
+        }
     }
 
     // Start is called before the first frame update
