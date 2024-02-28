@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -17,7 +18,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         // UnityAction을 사용한 이벤트 연결 방식
-        _action = () => OnButtonClick(startButton.name);
+        _action = () => OnStartClick();
         startButton.onClick.AddListener(_action);
         
         // 무명 메서드를 활용한 이벤트 연결 방식
@@ -30,5 +31,11 @@ public class UIManager : MonoBehaviour
     public void OnButtonClick(string msg)
     {
         Debug.Log($"Button Clicked!  {msg}");
+    }
+
+    public void OnStartClick()
+    {
+        SceneManager.LoadScene("Level_01");
+        SceneManager.LoadScene("Play", LoadSceneMode.Additive);
     }
 }
